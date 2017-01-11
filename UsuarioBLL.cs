@@ -13,42 +13,94 @@ namespace BLL
         IUsuarioRepositorio _usuarioRepositorio;
         public UsuarioBLL()
         {
-            _usuarioRepositorio = new UsuarioRepositorio();
+            try
+            {
+                _usuarioRepositorio = new UsuarioRepositorio();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public virtual List<Usuario> getUsuario(int Id = -1)
         {
-            if (Id == -1)
+            try
             {
-                return _usuarioRepositorio.GetTodos().ToList();
+                if (Id == -1)
+                {
+                    return _usuarioRepositorio.GetTodos().ToList();
+                }
+                else
+                {
+                    return _usuarioRepositorio.Get(p => p.Id == Id).ToList();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return _usuarioRepositorio.Get(p => p.Id == Id).ToList();
+
+                throw ex;
             }
+            
         }
 
         public virtual void AdicionarUsuario(Usuario usuario)
         {
-            _usuarioRepositorio.Adicionar(usuario);
-            _usuarioRepositorio.Commit();
+            try
+            {
+                _usuarioRepositorio.Adicionar(usuario);
+                _usuarioRepositorio.Commit();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public virtual Usuario Localizar(int id)
         {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return _usuarioRepositorio.Find(id);
         }
 
         public virtual void ExcluirUsuario(Usuario usuario)
         {
-            _usuarioRepositorio.Deletar(c => c == usuario);
-            _usuarioRepositorio.Commit();
+            try
+            {
+                _usuarioRepositorio.Deletar(c => c == usuario);
+                _usuarioRepositorio.Commit();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }            
         }
 
         public virtual void AlterarUsuario(Usuario usuario)
         {
-            _usuarioRepositorio.Atualizar(usuario);
-            _usuarioRepositorio.Commit();
+            try
+            {
+                _usuarioRepositorio.Atualizar(usuario);
+                _usuarioRepositorio.Commit();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }            
         }
     }
 }
