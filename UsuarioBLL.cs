@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
@@ -34,8 +35,8 @@ namespace BLL
                     return _usuarioRepositorio.GetTodos().ToList();
                 }
                 else
-                {
-                    return _usuarioRepositorio.Get(p => p.Id == Id).ToList();
+                {                    
+                    return _usuarioRepositorio.Get(p => p.Id == Id).ToList();                    
                 }
             }
             catch (Exception ex)
@@ -44,6 +45,36 @@ namespace BLL
                 throw ex;
             }
             
+        }
+
+        public virtual List<Usuario> getUsuario(Expression<Func<Usuario, string>> ordem, bool desc, int page, int pageSize,out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _usuarioRepositorio.getTotalRegistros();                    
+                return _usuarioRepositorio.GetTodos(ordem,desc,page,pageSize).ToList();                
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Usuario> getUsuario(Expression<Func<Usuario, bool>> predicate, Expression<Func<Usuario, string>> ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _usuarioRepositorio.getTotalRegistros(predicate);
+                return _usuarioRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public virtual void AdicionarUsuario(Usuario usuario)
