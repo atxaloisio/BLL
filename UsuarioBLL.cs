@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
-using DAL;
 using Model;
+using DAL;
+
 
 namespace BLL
 {
-    public class UsuarioBLL
+    public class UsuarioBLL : IDisposable
     {
         IUsuarioRepositorio _usuarioRepositorio;
         public UsuarioBLL()
@@ -81,8 +83,9 @@ namespace BLL
         {
             try
             {
+                usuario.dtcriacao = DateTime.Now;
                 _usuarioRepositorio.Adicionar(usuario);
-                _usuarioRepositorio.Commit();
+                _usuarioRepositorio.Commit();                
             }
             catch (Exception ex)
             {
@@ -92,18 +95,18 @@ namespace BLL
             
         }
 
-        public virtual Usuario Localizar(int id)
+        public virtual Usuario Localizar(int? id)
         {
             try
             {
-
+                return _usuarioRepositorio.Find(id);
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-            return _usuarioRepositorio.Find(id);
+            
         }
 
         public virtual void ExcluirUsuario(Usuario usuario)
@@ -124,6 +127,7 @@ namespace BLL
         {
             try
             {
+                usuario.dtalteracao = DateTime.Now;
                 _usuarioRepositorio.Atualizar(usuario);
                 _usuarioRepositorio.Commit();
             }
@@ -132,6 +136,15 @@ namespace BLL
 
                 throw ex;
             }            
+        }
+
+        public void Dispose()
+        {
+            if (_usuarioRepositorio != null)
+            {
+                _usuarioRepositorio.Dispose();
+            }
+            
         }
     }
 }
