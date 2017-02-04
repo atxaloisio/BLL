@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using DAL;
+using Utils; 
 
 
 namespace BLL
@@ -83,7 +84,7 @@ namespace BLL
         {
             try
             {
-                usuario.dtcriacao = DateTime.Now;
+                usuario.inclusao = DateTime.Now;
                 _usuarioRepositorio.Adicionar(usuario);
                 _usuarioRepositorio.Commit();                
             }
@@ -95,7 +96,7 @@ namespace BLL
             
         }
 
-        public virtual Usuario Localizar(int? id)
+        public virtual Usuario Localizar(long? id)
         {
             try
             {
@@ -107,6 +108,21 @@ namespace BLL
                 throw ex;
             }
             
+        }
+
+        public virtual Usuario loginSistema(string email, string password)
+        {            
+            Usuario usuario = new Usuario();
+            usuario.email = email;
+            usuario.password = Crypto.Codificar(password);
+            try
+            {
+                return _usuarioRepositorio.GetUsuarioPorLoginSenha(usuario);                
+            }
+            catch (Exception)
+            {
+                throw;                
+            }           
         }
 
         public virtual void ExcluirUsuario(Usuario usuario)
@@ -127,7 +143,7 @@ namespace BLL
         {
             try
             {
-                usuario.dtalteracao = DateTime.Now;
+                usuario.alteracao = DateTime.Now;
                 _usuarioRepositorio.Atualizar(usuario);
                 _usuarioRepositorio.Commit();
             }

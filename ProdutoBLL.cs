@@ -95,7 +95,7 @@ namespace BLL
 
         }
 
-        public virtual Produto Localizar(int? id)
+        public virtual Produto Localizar(long? id)
         {
             try
             {

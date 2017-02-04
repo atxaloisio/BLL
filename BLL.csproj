@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crypto.cs" />
+    <Compile Include="FuncaoBLL.cs" />
+    <Compile Include="Funcao_PerfilBLL.cs" />
+    <Compile Include="PerfilBLL.cs" />
     <Compile Include="ProdutoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioBLL.cs" />
@@ -54,6 +56,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{f2670f84-bee6-491c-8818-7a898b204bc5}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{2b871858-9472-400e-b75c-eccbe44ceae1}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
