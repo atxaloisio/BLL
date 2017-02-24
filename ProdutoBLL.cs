@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Produto> getProduto(Expression<Func<Produto, bool>> predicate)
+        {
+            try
+            {
+                return _ProdutoRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarProduto(Produto Produto)
         {
             try

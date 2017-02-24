@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate)
+        {
+            try
+            {                
+                return _ClienteRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarCliente(Cliente Cliente)
         {
             try
