@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using DAL;
+using Utils;
 
 
 namespace BLL
@@ -49,6 +50,27 @@ namespace BLL
 
         }
 
+        public virtual List<Pedido_OticaView> ToList_Pedido_OticaView(List<Pedido_Otica> lst)
+        {
+            List<Pedido_OticaView> lstRetorno = new List<Pedido_OticaView>();
+
+            foreach (Pedido_Otica item in lst)
+            {
+                lstRetorno.Add(new Pedido_OticaView {
+                    id = item.Id,
+                    codigo = item.codigo,
+                    cliente = item.cliente.nome_fantasia,
+                    codicao_pagamento = item.formaspagvenda.cDescricao,
+                    DtEmissao = item.data_emissao,
+                    DtFechamento = item.data_fechamento,
+                    Status = Enumerados.GetStringValue((StatusPedido)item.status)                    
+                });
+            }
+
+            return lstRetorno;
+
+        }
+
         public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, string>> ordem, bool desc, int page, int pageSize, out int totalRecords)
         {
             try
@@ -84,6 +106,7 @@ namespace BLL
             try
             {
                 Pedido_Otica.inclusao = DateTime.Now;
+                Pedido_Otica.codigo = Utils.Sequence.GetNextVal("sq_pedido_otica_sequence");
                 _Pedido_OticaRepositorio.Adicionar(Pedido_Otica);
                 _Pedido_OticaRepositorio.Commit();
             }
