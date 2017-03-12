@@ -12,7 +12,7 @@ using Utils;
 
 namespace BLL
 {
-    public class UsuarioBLL : IDisposable
+    public class UsuarioBLL : BaseBLL, IDisposable
     {
         IUsuarioRepositorio _usuarioRepositorio;
         public UsuarioBLL()

@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class CidadeBLL : IDisposable
+    public class CidadeBLL : BaseBLL, IDisposable
     {
         ICidadeRepositorio _CidadeRepositorio;
         public CidadeBLL()

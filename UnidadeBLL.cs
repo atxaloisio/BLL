@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class UnidadeBLL : IDisposable
+    public class UnidadeBLL : BaseBLL, IDisposable
     {
         IUnidadeRepositorio _UnidadeRepositorio;
         public UnidadeBLL()

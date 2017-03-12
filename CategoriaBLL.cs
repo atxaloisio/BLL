@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class CategoriaBLL : IDisposable
+    public class CategoriaBLL : BaseBLL, IDisposable
     {
         ICategoriaRepositorio _CategoriaRepositorio;
         public CategoriaBLL()

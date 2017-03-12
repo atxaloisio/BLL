@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class PaisBLL : IDisposable
+    public class PaisBLL : BaseBLL, IDisposable
     {
         IPaisRepositorio _PaisRepositorio;
         public PaisBLL()

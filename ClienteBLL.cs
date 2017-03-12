@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class ClienteBLL : IDisposable
+    public class ClienteBLL : BaseBLL, IDisposable
     {
         IClienteRepositorio _ClienteRepositorio;
         public ClienteBLL()

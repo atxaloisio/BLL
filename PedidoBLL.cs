@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class PedidoBLL : IDisposable
+    public class PedidoBLL : BaseBLL, IDisposable
     {
         IPedidoRepositorio _PedidoRepositorio;
         public PedidoBLL()

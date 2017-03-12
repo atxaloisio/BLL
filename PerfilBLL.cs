@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class PerfilBLL : IDisposable
+    public class PerfilBLL : BaseBLL, IDisposable
     {
         IPerfilRepositorio _PerfilRepositorio;
         public PerfilBLL()

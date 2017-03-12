@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class FormasPagVendaBLL : IDisposable
+    public class FormasPagVendaBLL : BaseBLL, IDisposable
     {
         IFormasPagVendaRepositorio _FormasPagVendaRepositorio;
         public FormasPagVendaBLL()

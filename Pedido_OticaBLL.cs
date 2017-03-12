@@ -12,7 +12,7 @@ using Utils;
 
 namespace BLL
 {
-    public class Pedido_OticaBLL : IDisposable
+    public class Pedido_OticaBLL :BaseBLL, IDisposable
     {
         IPedido_OticaRepositorio _Pedido_OticaRepositorio;
         public Pedido_OticaBLL()
@@ -106,6 +106,7 @@ namespace BLL
             try
             {
                 Pedido_Otica.inclusao = DateTime.Now;
+                Pedido_Otica.usuario_inclusao = UsuarioLogado.nome;
                 Pedido_Otica.codigo = Utils.Sequence.GetNextVal("sq_pedido_otica_sequence");
                 _Pedido_OticaRepositorio.Adicionar(Pedido_Otica);
                 _Pedido_OticaRepositorio.Commit();
@@ -150,7 +151,53 @@ namespace BLL
         {
             try
             {
+                ItemPedido_OticaBLL itemPedido_OticaBLL = new ItemPedido_OticaBLL();
+
+                //lista de itens do banco
+                ICollection<ItemPedido_Otica> itemPedido_OticaDB = itemPedido_OticaBLL.getItemPedido_Otica(p =>p.Id_pedido_otica == Pedido_Otica.Id);
+                ICollection<ItemPedido_Otica> itemPedido_OticaTela = Pedido_Otica.itempedido_otica;
+
+                foreach (ItemPedido_Otica item in itemPedido_OticaTela)
+                {
+                    //Marca todos com ID = 0 como adicionados.
+                    if (item.Id == 0)
+                    {
+                        item.state = EstadoEntidade.Added;
+                    }
+                    else
+                    {
+                        item.state = EstadoEntidade.Modified;
+                    }
+                }
+
+                //marcar todas como alteradas e verifica se ele existe na lista da tela.
+                foreach (ItemPedido_Otica item in itemPedido_OticaDB)
+                {
+                                       
+                    if (itemPedido_OticaTela.FirstOrDefault(p => p.Id == item.Id) == null)
+                    {
+                        //clonar o item para marca-lo para exclusão
+                        ItemPedido_Otica clone = new ItemPedido_Otica()
+                        {
+                            Id = item.Id,                            
+                            Id_pedido_otica = item.Id_pedido_otica,
+                            Id_produto = item.Id_produto,
+                            quantidade = item.quantidade,
+                            valor_unitario = item.valor_unitario,
+                            percentual_desconto = item.percentual_desconto,
+                            valor_desconto = item.valor_desconto,
+                            valor_total = item.valor_total,
+                            unidade = item.unidade                                                        
+                        };
+
+                        clone.state = EstadoEntidade.Deleted;
+
+                        itemPedido_OticaTela.Add(clone);
+                    }
+                }
+                                                
                 Pedido_Otica.alteracao = DateTime.Now;
+                Pedido_Otica.usuario_alteracao = UsuarioLogado.nome;
                 _Pedido_OticaRepositorio.Atualizar(Pedido_Otica);
                 _Pedido_OticaRepositorio.Commit();
             }

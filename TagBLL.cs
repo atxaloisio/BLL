@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class TagBLL : IDisposable
+    public class TagBLL : BaseBLL, IDisposable
     {
         ITagRepositorio _TagRepositorio;
         public TagBLL()

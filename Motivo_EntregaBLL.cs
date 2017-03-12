@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class Motivo_EntregaBLL : IDisposable
+    public class Motivo_EntregaBLL : BaseBLL, IDisposable
     {
         IMotivo_EntregaRepositorio _Motivo_EntregaRepositorio;
         public Motivo_EntregaBLL()

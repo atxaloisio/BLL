@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseBLL.cs" />
     <Compile Include="CategoriaBLL.cs" />
     <Compile Include="CidadeBLL.cs" />
     <Compile Include="ClienteBLL.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="FormasPagVendaBLL.cs" />
     <Compile Include="FuncaoBLL.cs" />
     <Compile Include="Funcao_PerfilBLL.cs" />
+    <Compile Include="ItemPedido_OticaBLL.cs" />
     <Compile Include="Motivo_EntregaBLL.cs" />
     <Compile Include="PaisBLL.cs" />
     <Compile Include="ParcelaBLL.cs" />

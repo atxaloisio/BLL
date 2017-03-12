@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class Conta_CorrenteBLL : IDisposable
+    public class Conta_CorrenteBLL : BaseBLL, IDisposable
     {
         IConta_CorrenteRepositorio _Conta_CorrenteRepositorio;
         public Conta_CorrenteBLL()

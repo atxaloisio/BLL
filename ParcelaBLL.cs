@@ -11,7 +11,7 @@ using DAL;
 
 namespace BLL
 {
-    public class ParcelaBLL : IDisposable
+    public class ParcelaBLL : BaseBLL, IDisposable
     {
         IParcelaRepositorio _ParcelaRepositorio;
         public ParcelaBLL()
