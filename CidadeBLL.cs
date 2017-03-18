@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate)
+        {
+            try
+            {
+                return _CidadeRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarCidade(Cidade Cidade)
         {
             try

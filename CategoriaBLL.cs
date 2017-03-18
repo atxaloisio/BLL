@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Categoria> getCategoria(Expression<Func<Categoria, bool>> predicate)
+        {
+            try
+            {
+                return _CategoriaRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarCategoria(Categoria Categoria)
         {
             try

@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate)
+        {
+            try
+            {
+                return _FormasPagVendaRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarFormasPagVenda(FormasPagVenda FormasPagVenda)
         {
             try
