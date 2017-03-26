@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Parcela> getParcela(Expression<Func<Parcela, bool>> predicate)
+        {
+            try
+            {
+                return _ParcelaRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarParcela(Parcela Parcela)
         {
             try

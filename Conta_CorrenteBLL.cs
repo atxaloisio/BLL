@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Conta_Corrente> getConta_Corrente(Expression<Func<Conta_Corrente, bool>> predicate)
+        {
+            try
+            {
+                return _Conta_CorrenteRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarConta_Corrente(Conta_Corrente Conta_Corrente)
         {
             try

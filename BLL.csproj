@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +62,7 @@
     <Compile Include="PerfilBLL.cs" />
     <Compile Include="ProdutoBLL.cs" />
     <Compile Include="Produto_IbptBLL.cs" />
+    <Compile Include="Produto_ImpostoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotaBLL.cs" />
     <Compile Include="TagBLL.cs" />
