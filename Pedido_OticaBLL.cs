@@ -143,6 +143,32 @@ namespace BLL
 
         }
 
+        public int getTotalRegistro()
+        {
+            try
+            {
+                return _Pedido_OticaRepositorio.getTotalRegistros();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public int getTotalRegistro(Expression<Func<Pedido_Otica, bool>> predicate)
+        {
+            try
+            {
+                return _Pedido_OticaRepositorio.getTotalRegistros(predicate);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public virtual void AdicionarPedido_Otica(Pedido_Otica Pedido_Otica)
         {
             try
@@ -390,6 +416,24 @@ namespace BLL
 
                 File.WriteAllText(@CaminhoArquivos + @"\" + NomeArq, linha);
             }
+        }
+
+        public void AtualizarStatusPedido(long? id, StatusPedido status)
+        {
+            try
+            {
+                Pedido_Otica pedido_Otica = Localizar(id);
+                if (pedido_Otica != null)
+                {
+                    pedido_Otica.status = (int)status;
+                    AlterarPedido_Otica(pedido_Otica);
+                }
+            }
+            catch (Exception ex)
+            {               
+                throw ex;
+            }
+            
         }
 
         public void Dispose()
