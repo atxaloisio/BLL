@@ -216,6 +216,65 @@ namespace BLL
             }
         }
 
+        public virtual decimal? CalcularBasePedido_Otica(string strEsf, string strCil)
+        {
+            const int positiva = 6;
+            const int negativa = -6;
+            decimal? retorno = null;
+            decimal esf = 0;
+            decimal cil = 0;
+            try
+            {
+                if ((!string.IsNullOrEmpty(strEsf)) & (!string.IsNullOrEmpty(strCil)))
+                {
+                    strEsf = strEsf.Replace(".", ",");
+                    strCil = strCil.Replace(".", ",");
+
+                    if (strEsf.Substring(0, 1) == "+")
+                    {
+                        esf = Convert.ToDecimal(strEsf.Substring(1, strEsf.Length - 1));
+                        cil = Convert.ToDecimal(strCil.Substring(1, strCil.Length - 1));
+                        
+                    }
+                    else if (strEsf.Substring(0, 1) == "-")
+                    {                        
+                        esf = Convert.ToDecimal(strEsf.Substring(1, strEsf.Length - 1));
+                        cil = Convert.ToDecimal(strCil.Substring(1, strCil.Length - 1));
+                        esf = esf * -1;
+                    }
+
+                    if (esf > 0)
+                    {
+                        if (cil < 0)
+                        {
+                            cil = cil * 1;
+                        }
+
+                        retorno = ((esf - cil) / 2) + positiva;
+                        retorno = Math.Round(Convert.ToDecimal(retorno));
+                    }
+                    else
+                    {
+                        //if (cil > 0)
+                        //{
+                        //    cil = cil * -1;
+                        //}
+                        retorno = ((esf - cil) / 2) - negativa;
+                    }
+                }
+                                
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+            }
+        }
+
         public virtual void AlterarPedido_Otica(Pedido_Otica Pedido_Otica)
         {
             try
