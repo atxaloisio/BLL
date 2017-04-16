@@ -79,6 +79,50 @@ namespace BLL
 
         }
 
+        public virtual List<Produto_Ibpt> getProduto_Ibpt(Expression<Func<Produto_Ibpt, bool>> predicate, Expression<Func<Produto_Ibpt, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Produto_IbptRepositorio.getTotalRegistros(predicate);
+                return _Produto_IbptRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Produto_Ibpt> getProduto_Ibpt(Expression<Func<Produto_Ibpt, bool>> predicate, Expression<Func<Produto_Ibpt, string>>[] ordem, bool desc)
+        {
+            try
+            {         
+                return _Produto_IbptRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Produto_Ibpt> getProduto_Ibpt(Expression<Func<Produto_Ibpt, bool>> predicate)
+        {
+            try
+            {
+                return _Produto_IbptRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+
         public virtual void AdicionarProduto_Ibpt(Produto_Ibpt Produto_Ibpt)
         {
             try

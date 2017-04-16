@@ -93,6 +93,36 @@ namespace BLL
 
         }
 
+        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, Expression<Func<Tag, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _TagRepositorio.getTotalRegistros(predicate);
+                return _TagRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, Expression<Func<Tag, string>>[] ordem, bool desc)
+        {
+            try
+            {
+                
+                return _TagRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarTag(Tag Tag)
         {
             try

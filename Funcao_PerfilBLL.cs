@@ -79,6 +79,35 @@ namespace BLL
 
         }
 
+        public virtual List<Funcao_Perfil> getFuncao_Perfil(Expression<Func<Funcao_Perfil, bool>> predicate, Expression<Func<Funcao_Perfil, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Funcao_PerfilRepositorio.getTotalRegistros(predicate);
+                return _Funcao_PerfilRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Funcao_Perfil> getFuncao_Perfil(Expression<Func<Funcao_Perfil, bool>> predicate, Expression<Func<Funcao_Perfil, string>>[] ordem, bool desc)
+        {
+            try
+            {                
+                return _Funcao_PerfilRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarFuncao_Perfil(Funcao_Perfil Funcao_Perfil)
         {
             try

@@ -79,6 +79,36 @@ namespace BLL
 
         }
 
+        public virtual List<Categoria> getCategoria(Expression<Func<Categoria, bool>> predicate, Expression<Func<Categoria, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _CategoriaRepositorio.getTotalRegistros(predicate);
+                return _CategoriaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Categoria> getCategoria(Expression<Func<Categoria, bool>> predicate, Expression<Func<Categoria, string>>[] ordem, bool desc)
+        {
+            try
+            {
+         
+                return _CategoriaRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<Categoria> getCategoria(Expression<Func<Categoria, bool>> predicate)
         {
             try

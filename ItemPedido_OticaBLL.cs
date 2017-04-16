@@ -79,6 +79,35 @@ namespace BLL
 
         }
 
+        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, Expression<Func<ItemPedido_Otica, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _ItemPedido_OticaRepositorio.getTotalRegistros(predicate);
+                return _ItemPedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, Expression<Func<ItemPedido_Otica, string>>[] ordem, bool desc)
+        {
+            try
+            {        
+                return _ItemPedido_OticaRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate)
         {
             try

@@ -43,12 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBLL.cs" />
+    <Compile Include="CaixaBLL.cs" />
     <Compile Include="CategoriaBLL.cs" />
     <Compile Include="CidadeBLL.cs" />
     <Compile Include="ClienteBLL.cs" />
     <Compile Include="Cliente_ParcelaBLL.cs" />
     <Compile Include="Cliente_TagBLL.cs" />
     <Compile Include="Cliente_TransportadoraBLL.cs" />
+    <Compile Include="Cliente_VendedorBLL.cs" />
     <Compile Include="Conta_CorrenteBLL.cs" />
     <Compile Include="FormasPagVendaBLL.cs" />
     <Compile Include="FuncaoBLL.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="PaisBLL.cs" />
     <Compile Include="ParcelaBLL.cs" />
     <Compile Include="PedidoBLL.cs" />
+    <Compile Include="Pedido_ArmacaoBLL.cs" />
+    <Compile Include="Pedido_LenteBLL.cs" />
     <Compile Include="Pedido_OticaBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
     <Compile Include="ProdutoBLL.cs" />
@@ -68,6 +72,8 @@
     <Compile Include="TagBLL.cs" />
     <Compile Include="UnidadeBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
+    <Compile Include="VendedorBLL.cs" />
+    <Compile Include="Vendedor_LocalidadeBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

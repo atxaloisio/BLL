@@ -79,6 +79,35 @@ namespace BLL
 
         }
 
+        public virtual List<Conta_Corrente> getConta_Corrente(Expression<Func<Conta_Corrente, bool>> predicate, Expression<Func<Conta_Corrente, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Conta_CorrenteRepositorio.getTotalRegistros(predicate);
+                return _Conta_CorrenteRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Conta_Corrente> getConta_Corrente(Expression<Func<Conta_Corrente, bool>> predicate, Expression<Func<Conta_Corrente, string>>[] ordem, bool desc)
+        {
+            try
+            {                
+                return _Conta_CorrenteRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<Conta_Corrente> getConta_Corrente(Expression<Func<Conta_Corrente, bool>> predicate)
         {
             try

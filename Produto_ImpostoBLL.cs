@@ -79,6 +79,20 @@ namespace BLL
 
         }
 
+        public virtual List<Produto_Imposto> getProduto_Imposto(Expression<Func<Produto_Imposto, bool>> predicate, Expression<Func<Produto_Imposto, string>>[] ordem, bool desc)
+        {
+            try
+            {        
+                return _Produto_ImpostoRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<Produto_Imposto> getProduto_Imposto(Expression<Func<Produto_Imposto, bool>> predicate)
         {
             try

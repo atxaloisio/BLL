@@ -79,6 +79,50 @@ namespace BLL
 
         }
 
+        public virtual List<Funcao> getFuncao(Expression<Func<Funcao, bool>> predicate, Expression<Func<Funcao, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _FuncaoRepositorio.getTotalRegistros(predicate);
+                return _FuncaoRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Funcao> getFuncao(Expression<Func<Funcao, bool>> predicate, Expression<Func<Funcao, string>>[] ordem, bool desc)
+        {
+            try
+            {        
+                return _FuncaoRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Funcao> getFuncao(Expression<Func<Funcao, bool>> predicate)
+        {
+            try
+            {
+        
+                return _FuncaoRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarFuncao(Funcao Funcao)
         {
             try

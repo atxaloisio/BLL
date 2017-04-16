@@ -79,6 +79,36 @@ namespace BLL
 
         }
 
+        public virtual List<Cliente_Tag> getCliente_Tag(Expression<Func<Cliente_Tag, bool>> predicate, Expression<Func<Cliente_Tag, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Cliente_TagRepositorio.getTotalRegistros(predicate);
+                return _Cliente_TagRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Cliente_Tag> getCliente_Tag(Expression<Func<Cliente_Tag, bool>> predicate, Expression<Func<Cliente_Tag, string>>[] ordem, bool desc)
+        {
+            try
+            {
+                
+                return _Cliente_TagRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<Cliente_Tag> getCliente_Tag(Expression<Func<Cliente_Tag, bool>> predicate)
         {
             try

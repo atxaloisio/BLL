@@ -80,6 +80,72 @@ namespace BLL
 
         }
 
+        public virtual List<Usuario> getUsuario(Expression<Func<Usuario, bool>> predicate, Expression<Func<Usuario, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _usuarioRepositorio.getTotalRegistros(predicate);
+                return _usuarioRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Usuario> getUsuario(Expression<Func<Usuario, bool>> predicate, Expression<Func<Usuario, string>>[] ordem, bool desc, int page)
+        {
+            try
+            {         
+                return _usuarioRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+        public virtual List<Usuario> getUsuario(Expression<Func<Usuario, bool>> predicate)
+        {
+            try
+            {
+                return _usuarioRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<UsuarioView> ToList_UsuarioView(List<Usuario> lst)
+        {
+            List<UsuarioView> lstRetorno = new List<UsuarioView>();
+
+            foreach (Usuario item in lst)
+            {
+                if (item != null)
+                {
+                    lstRetorno.Add(new UsuarioView()
+                    {
+                        Id = item.Id,
+                        nome = item.nome,
+                        email = item.email,
+                        perfil = item.perfil.nome,
+                        inativo = item.inativo == "S"
+                    });
+                }
+
+            }
+
+            return lstRetorno;
+
+        }
+
         public virtual void AdicionarUsuario(Usuario usuario)
         {
             try

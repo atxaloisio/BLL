@@ -79,6 +79,49 @@ namespace BLL
 
         }
 
+        public virtual List<Motivo_Entrega> getMotivo_Entrega(Expression<Func<Motivo_Entrega, bool>> predicate, Expression<Func<Motivo_Entrega, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Motivo_EntregaRepositorio.getTotalRegistros(predicate);
+                return _Motivo_EntregaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Motivo_Entrega> getMotivo_Entrega(Expression<Func<Motivo_Entrega, bool>> predicate, Expression<Func<Motivo_Entrega, string>>[] ordem, bool desc)
+        {
+            try
+            {        
+                return _Motivo_EntregaRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Motivo_Entrega> getMotivo_Entrega(Expression<Func<Motivo_Entrega, bool>> predicate)
+        {
+            try
+            {                
+                return _Motivo_EntregaRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarMotivo_Entrega(Motivo_Entrega Motivo_Entrega)
         {
             try

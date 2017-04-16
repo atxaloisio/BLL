@@ -79,6 +79,51 @@ namespace BLL
 
         }
 
+        public virtual List<Pais> getPais(Expression<Func<Pais, bool>> predicate, Expression<Func<Pais, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _PaisRepositorio.getTotalRegistros(predicate);
+                return _PaisRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Pais> getPais(Expression<Func<Pais, bool>> predicate, Expression<Func<Pais, string>>[] ordem, bool desc)
+        {
+            try
+            {
+                
+                return _PaisRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Pais> getPais(Expression<Func<Pais, bool>> predicate)
+        {
+            try
+            {
+
+                return _PaisRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarPais(Pais Pais)
         {
             try

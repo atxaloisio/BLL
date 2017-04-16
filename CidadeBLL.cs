@@ -79,6 +79,36 @@ namespace BLL
 
         }
 
+        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, Expression<Func<Cidade, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _CidadeRepositorio.getTotalRegistros(predicate);
+                return _CidadeRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, Expression<Func<Cidade, string>>[] ordem, bool desc)
+        {
+            try
+            {
+         
+                return _CidadeRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate)
         {
             try

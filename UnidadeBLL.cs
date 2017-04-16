@@ -93,6 +93,51 @@ namespace BLL
 
         }
 
+        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, Expression<Func<Unidade, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _UnidadeRepositorio.getTotalRegistros(predicate);
+                return _UnidadeRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, Expression<Func<Unidade, string>>[] ordem, bool desc)
+        {
+            try
+            {
+         
+                return _UnidadeRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate)
+        {
+            try
+            {
+
+                return _UnidadeRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public virtual void AdicionarUnidade(Unidade Unidade)
         {
             try

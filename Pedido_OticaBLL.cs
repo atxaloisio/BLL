@@ -58,16 +58,39 @@ namespace BLL
 
             foreach (Pedido_Otica item in lst)
             {
-                lstRetorno.Add(new Pedido_OticaView
+                Pedido_OticaView pedido = new Pedido_OticaView();
+                pedido.id = item.Id;
+                pedido.codigo = item.codigo;
+                pedido.numero_pedido_cliente = item.numero_pedido_cliente;
+                pedido.numero_caixa = item.numero_caixa;
+                pedido.cliente = item.cliente.nome_fantasia;
+                pedido.codicao_pagamento = item.parcela.descricao;
+
+                if (item.vendedor != null)
                 {
-                    id = item.Id,
-                    codigo = item.codigo,
-                    cliente = item.cliente.nome_fantasia,
-                    codicao_pagamento = item.parcela.descricao,
-                    DtEmissao = item.data_emissao,
-                    DtFechamento = item.data_fechamento,
-                    Status = Enumerados.GetStringValue((StatusPedido)item.status)
-                });
+                    pedido.vendedor = item.vendedor.nome;
+                }
+
+                if (item.transportadora != null)
+                {
+                    pedido.transportadora = item.transportadora.nome_fantasia;
+                }
+                
+                pedido.DtEmissao = item.data_emissao;
+                pedido.DtFechamento = item.data_fechamento;
+                pedido.Status = Enumerados.GetStringValue((StatusPedido)item.status);
+                if (!string.IsNullOrEmpty(item.usuario_alteracao))
+                {
+                    pedido.usuario = item.usuario_alteracao;
+                }
+                else if (!string.IsNullOrEmpty(item.usuario_inclusao))
+                {
+                    pedido.usuario = item.usuario_inclusao;
+                }
+
+
+                lstRetorno.Add(pedido);
+
             }
 
             return lstRetorno;
@@ -120,6 +143,36 @@ namespace BLL
             {
                 totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
                 return _Pedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, Expression<Func<Pedido_Otica, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
+                return _Pedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, Expression<Func<Pedido_Otica, string>>[] ordem, bool desc)
+        {
+            try
+            {
+        
+                return _Pedido_OticaRepositorio.Get(predicate, ordem, desc).ToList();
             }
             catch (Exception ex)
             {
@@ -234,10 +287,10 @@ namespace BLL
                     {
                         esf = Convert.ToDecimal(strEsf.Substring(1, strEsf.Length - 1));
                         cil = Convert.ToDecimal(strCil.Substring(1, strCil.Length - 1));
-                        
+
                     }
                     else if (strEsf.Substring(0, 1) == "-")
-                    {                        
+                    {
                         esf = Convert.ToDecimal(strEsf.Substring(1, strEsf.Length - 1));
                         cil = Convert.ToDecimal(strCil.Substring(1, strCil.Length - 1));
                         esf = esf * -1;
@@ -262,7 +315,7 @@ namespace BLL
                         retorno = ((esf - cil) / 2) - negativa;
                     }
                 }
-                                
+
                 return retorno;
             }
             catch (Exception ex)
@@ -420,7 +473,7 @@ namespace BLL
                     TextoArq[CLIENTE] = "\"" + pedido.cliente.nome_fantasia + ";" + pedido.cliente.codigo_cliente_integracao + ";" + pedido.numero_pedido_cliente + "\"";
                 }
 
-                
+
                 TextoArq[ESF_OD] = pedido.od_gl_esf;
                 TextoArq[CIL_OD] = pedido.od_gl_cil;
                 TextoArq[EIXO_OD] = pedido.od_eixo.ToString();
@@ -461,9 +514,9 @@ namespace BLL
                     }
                     else
                     {
-                        linha += "," + item ;
+                        linha += "," + item;
                     }
-                    
+
                 }
 
                 NomeArq = pedido.codigo.ToString();
@@ -489,10 +542,10 @@ namespace BLL
                 }
             }
             catch (Exception ex)
-            {               
+            {
                 throw ex;
             }
-            
+
         }
 
         public void Dispose()

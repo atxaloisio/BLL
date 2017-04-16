@@ -79,6 +79,34 @@ namespace BLL
 
         }
 
+        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, Expression<Func<FormasPagVenda, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        {
+            try
+            {
+                totalRecords = _FormasPagVendaRepositorio.getTotalRegistros(predicate);
+                return _FormasPagVendaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, Expression<Func<FormasPagVenda, string>>[] ordem, bool desc)
+        {
+            try
+            {                
+                return _FormasPagVendaRepositorio.Get(predicate, ordem, desc).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
         public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate)
         {
             try
