@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate, Expression<Func<Cliente, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Cliente, string>>[] ordem)
         {
             try
             {
                 totalRecords = _ClienteRepositorio.getTotalRegistros(predicate);
-                return _ClienteRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _ClienteRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate, Expression<Func<Cliente, string>>[] ordem, bool desc)
+        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate, bool desc, params Expression<Func<Cliente, string>>[] ordem)
         {
             try
             {
                 
-                return _ClienteRepositorio.Get(predicate, ordem, desc).ToList();
+                return _ClienteRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -120,6 +120,37 @@ namespace BLL
 
                 throw ex;
             }
+
+        }
+
+        public virtual List<ClienteView> ToList_ClienteView(List<Cliente> lst)
+        {
+            List<ClienteView> lstRetorno = new List<ClienteView>();
+
+            foreach (Cliente item in lst)
+            {
+                lstRetorno.Add(new ClienteView
+                {
+                    Id = item.Id,
+                    bairro = item.bairro,
+                    cep = item.cep,
+                    cidade = item.cidade,
+                    cnpj_cpf = item.cnpj_cpf,
+                    codigo_cliente_integracao = item.codigo_cliente_integracao,
+                    complemento = item.complemento,
+                    email = item.email,
+                    endereco = item.endereco,
+                    endereco_numero = item.endereco_numero,
+                    estado = item.estado,
+                    logradouro = item.logradouro,
+                    nome_fantasia = item.nome_fantasia,
+                    razao_social = item.razao_social,
+                    telefone1_ddd = item.telefone1_ddd,
+                    telefone1_numero = item.telefone1_numero
+                });
+            }
+
+            return lstRetorno;
 
         }
 

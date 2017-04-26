@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, Expression<Func<FormasPagVenda, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<FormasPagVenda, string>>[] ordem)
         {
             try
             {
                 totalRecords = _FormasPagVendaRepositorio.getTotalRegistros(predicate);
-                return _FormasPagVendaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _FormasPagVendaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, Expression<Func<FormasPagVenda, string>>[] ordem, bool desc)
+        public virtual List<FormasPagVenda> getFormasPagVenda(Expression<Func<FormasPagVenda, bool>> predicate, bool desc, params Expression<Func<FormasPagVenda, string>>[] ordem)
         {
             try
             {                
-                return _FormasPagVendaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _FormasPagVendaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

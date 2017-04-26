@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Vendedor_Localidade> getVendedor_Localidade(Expression<Func<Vendedor_Localidade, bool>> predicate, Expression<Func<Vendedor_Localidade, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Vendedor_Localidade> getVendedor_Localidade(Expression<Func<Vendedor_Localidade, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Vendedor_Localidade, string>>[] ordem)
         {
             try
             {
                 totalRecords = _Vendedor_LocalidadeRepositorio.getTotalRegistros(predicate);
-                return _Vendedor_LocalidadeRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Vendedor_LocalidadeRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Vendedor_Localidade> getVendedor_Localidade(Expression<Func<Vendedor_Localidade, bool>> predicate, Expression<Func<Vendedor_Localidade, string>>[] ordem, bool desc)
+        public virtual List<Vendedor_Localidade> getVendedor_Localidade(Expression<Func<Vendedor_Localidade, bool>> predicate, bool desc, params Expression<Func<Vendedor_Localidade, string>>[] ordem)
         {
             try
             {
          
-                return _Vendedor_LocalidadeRepositorio.Get(predicate, ordem,desc).ToList();
+                return _Vendedor_LocalidadeRepositorio.Get(predicate,desc, ordem).ToList();
             }
             catch (Exception ex)
             {

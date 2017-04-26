@@ -62,7 +62,11 @@ namespace BLL
                 pedido.id = item.Id;
                 pedido.codigo = item.codigo;
                 pedido.numero_pedido_cliente = item.numero_pedido_cliente;
-                pedido.numero_caixa = item.numero_caixa;
+                if (item.caixa != null)
+                {
+                    pedido.numero_caixa = item.caixa.numero;
+                }
+                
                 pedido.cliente = item.cliente.nome_fantasia;
                 pedido.codicao_pagamento = item.parcela.descricao;
 
@@ -152,12 +156,12 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, Expression<Func<Pedido_Otica, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords,params Expression<Func<Pedido_Otica, string>>[] ordem)
         {
             try
             {
                 totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
-                return _Pedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Pedido_OticaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -167,12 +171,12 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, Expression<Func<Pedido_Otica, string>>[] ordem, bool desc)
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc,params Expression<Func<Pedido_Otica, string>>[] ordem)
         {
             try
             {
         
-                return _Pedido_OticaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Pedido_OticaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

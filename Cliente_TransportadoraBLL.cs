@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Transportadora> getCliente_Transportadora(Expression<Func<Cliente_Transportadora, bool>> predicate, Expression<Func<Cliente_Transportadora, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Cliente_Transportadora> getCliente_Transportadora(Expression<Func<Cliente_Transportadora, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Cliente_Transportadora, string>>[] ordem)
         {
             try
             {
                 totalRecords = _Cliente_TransportadoraRepositorio.getTotalRegistros(predicate);
-                return _Cliente_TransportadoraRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Cliente_TransportadoraRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Transportadora> getCliente_Transportadora(Expression<Func<Cliente_Transportadora, bool>> predicate, Expression<Func<Cliente_Transportadora, string>>[] ordem, bool desc)
+        public virtual List<Cliente_Transportadora> getCliente_Transportadora(Expression<Func<Cliente_Transportadora, bool>> predicate, bool desc,params Expression<Func<Cliente_Transportadora, string>>[] ordem)
         {
             try
             {       
-                return _Cliente_TransportadoraRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Cliente_TransportadoraRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Vendedor> getCliente_Vendedor(Expression<Func<Cliente_Vendedor, bool>> predicate, Expression<Func<Cliente_Vendedor, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Cliente_Vendedor> getCliente_Vendedor(Expression<Func<Cliente_Vendedor, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Cliente_Vendedor, string>>[] ordem)
         {
             try
             {
                 totalRecords = _Cliente_VendedorRepositorio.getTotalRegistros(predicate);
-                return _Cliente_VendedorRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Cliente_VendedorRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Vendedor> getCliente_Vendedor(Expression<Func<Cliente_Vendedor, bool>> predicate, Expression<Func<Cliente_Vendedor, string>>[] ordem, bool desc)
+        public virtual List<Cliente_Vendedor> getCliente_Vendedor(Expression<Func<Cliente_Vendedor, bool>> predicate, bool desc, params Expression<Func<Cliente_Vendedor, string>>[] ordem)
         {
             try
             {                
-                return _Cliente_VendedorRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Cliente_VendedorRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

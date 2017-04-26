@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, Expression<Func<ItemPedido_Otica, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<ItemPedido_Otica, string>>[] ordem)
         {
             try
             {
                 totalRecords = _ItemPedido_OticaRepositorio.getTotalRegistros(predicate);
-                return _ItemPedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _ItemPedido_OticaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, Expression<Func<ItemPedido_Otica, string>>[] ordem, bool desc)
+        public virtual List<ItemPedido_Otica> getItemPedido_Otica(Expression<Func<ItemPedido_Otica, bool>> predicate, bool desc, params Expression<Func<ItemPedido_Otica, string>>[] ordem)
         {
             try
             {        
-                return _ItemPedido_OticaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _ItemPedido_OticaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

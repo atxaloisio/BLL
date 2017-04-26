@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Rota> getRota(Expression<Func<Rota, bool>> predicate, Expression<Func<Rota, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Rota> getRota(Expression<Func<Rota, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Rota, string>>[] ordem)
         {
             try
             {
                 totalRecords = _RotaRepositorio.getTotalRegistros(predicate);
-                return _RotaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _RotaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Rota> getRota(Expression<Func<Rota, bool>> predicate, Expression<Func<Rota, string>>[] ordem, bool desc, int page)
+        public virtual List<Rota> getRota(Expression<Func<Rota, bool>> predicate, bool desc, int page, params Expression<Func<Rota, string>>[] ordem)
         {
             try
             {
         
-                return _RotaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _RotaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

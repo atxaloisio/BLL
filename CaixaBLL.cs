@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Caixa> getCaixa(Expression<Func<Caixa, bool>> predicate, Expression<Func<Caixa, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Caixa> getCaixa(Expression<Func<Caixa, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Caixa, string>>[] ordem)
         {
             try
             {
                 totalRecords = _CaixaRepositorio.getTotalRegistros(predicate);
-                return _CaixaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _CaixaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<Caixa> getCaixa(Expression<Func<Caixa, bool>> predicate, Expression<Func<Caixa, string>>[] ordem, bool desc)
+        public virtual List<Caixa> getCaixa(Expression<Func<Caixa, bool>> predicate, bool desc, params Expression<Func<Caixa, string>>[] ordem)
         {
             try
             {        
-                return _CaixaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _CaixaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -113,6 +113,20 @@ namespace BLL
             try
             {
                 return _CaixaRepositorio.Get(predicate).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Caixa> getCaixaJoin(StatusPedido status)
+        {
+            try
+            {
+                return _CaixaRepositorio.GetCaixaJoin(status).ToList();
             }
             catch (Exception ex)
             {

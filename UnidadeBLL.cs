@@ -93,12 +93,12 @@ namespace BLL
 
         }
 
-        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, Expression<Func<Unidade, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Unidade, string>>[] ordem)
         {
             try
             {
                 totalRecords = _UnidadeRepositorio.getTotalRegistros(predicate);
-                return _UnidadeRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _UnidadeRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -108,12 +108,12 @@ namespace BLL
 
         }
 
-        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, Expression<Func<Unidade, string>>[] ordem, bool desc)
+        public virtual List<Unidade> getUnidade(Expression<Func<Unidade, bool>> predicate, bool desc, params Expression<Func<Unidade, string>>[] ordem)
         {
             try
             {
          
-                return _UnidadeRepositorio.Get(predicate, ordem, desc).ToList();
+                return _UnidadeRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

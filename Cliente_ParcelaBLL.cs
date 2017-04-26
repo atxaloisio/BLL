@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Parcela> getCliente_Parcela(Expression<Func<Cliente_Parcela, bool>> predicate, Expression<Func<Cliente_Parcela, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Cliente_Parcela> getCliente_Parcela(Expression<Func<Cliente_Parcela, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Cliente_Parcela, string>>[] ordem)
         {
             try
             {
                 totalRecords = _Cliente_ParcelaRepositorio.getTotalRegistros(predicate);
-                return _Cliente_ParcelaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Cliente_ParcelaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente_Parcela> getCliente_Parcela(Expression<Func<Cliente_Parcela, bool>> predicate, Expression<Func<Cliente_Parcela, string>>[] ordem, bool desc)
+        public virtual List<Cliente_Parcela> getCliente_Parcela(Expression<Func<Cliente_Parcela, bool>> predicate, bool desc,params Expression<Func<Cliente_Parcela, string>>[] ordem)
         {
             try
             {
                 
-                return _Cliente_ParcelaRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Cliente_ParcelaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

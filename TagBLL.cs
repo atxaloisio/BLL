@@ -53,7 +53,7 @@ namespace BLL
         {
             try
             {
-                return _TagRepositorio.Get(p => p.tag1.Contains(ptag)).ToList();
+                return _TagRepositorio.GetNT(p => p.tag1.Contains(ptag)).ToList();
             }
             catch (Exception ex)
             {
@@ -93,12 +93,12 @@ namespace BLL
 
         }
 
-        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, Expression<Func<Tag, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Tag, string>>[] ordem)
         {
             try
             {
                 totalRecords = _TagRepositorio.getTotalRegistros(predicate);
-                return _TagRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _TagRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -108,12 +108,12 @@ namespace BLL
 
         }
 
-        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, Expression<Func<Tag, string>>[] ordem, bool desc)
+        public virtual List<Tag> getTag(Expression<Func<Tag, bool>> predicate, bool desc, params Expression<Func<Tag, string>>[] ordem)
         {
             try
             {
                 
-                return _TagRepositorio.Get(predicate, ordem, desc).ToList();
+                return _TagRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

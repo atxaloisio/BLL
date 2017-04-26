@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Perfil> getPerfil(Expression<Func<Perfil, bool>> predicate, Expression<Func<Perfil, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Perfil> getPerfil(Expression<Func<Perfil, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Perfil, string>>[] ordem)
         {
             try
             {
                 totalRecords = _PerfilRepositorio.getTotalRegistros(predicate);
-                return _PerfilRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _PerfilRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Perfil> getPerfil(Expression<Func<Perfil, bool>> predicate, Expression<Func<Perfil, string>>[] ordem, bool desc)
+        public virtual List<Perfil> getPerfil(Expression<Func<Perfil, bool>> predicate, bool desc, params Expression<Func<Perfil, string>>[] ordem)
         {
             try
             {
         
-                return _PerfilRepositorio.Get(predicate, ordem, desc).ToList();
+                return _PerfilRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

@@ -79,11 +79,26 @@ namespace BLL
 
         }
 
-        public virtual List<Produto_Imposto> getProduto_Imposto(Expression<Func<Produto_Imposto, bool>> predicate, Expression<Func<Produto_Imposto, string>>[] ordem, bool desc)
+        public virtual List<Produto_Imposto> getProduto_Imposto(Expression<Func<Produto_Imposto, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Produto_Imposto, string>>[] ordem)
+        {
+            try
+            {
+                totalRecords = _Produto_ImpostoRepositorio.getTotalRegistros(predicate);
+                return _Produto_ImpostoRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public virtual List<Produto_Imposto> getProduto_Imposto(Expression<Func<Produto_Imposto, bool>> predicate, bool desc, params Expression<Func<Produto_Imposto, string>>[] ordem)
         {
             try
             {        
-                return _Produto_ImpostoRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Produto_ImpostoRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

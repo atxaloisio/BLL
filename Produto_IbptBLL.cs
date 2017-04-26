@@ -84,7 +84,7 @@ namespace BLL
             try
             {
                 totalRecords = _Produto_IbptRepositorio.getTotalRegistros(predicate);
-                return _Produto_IbptRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _Produto_IbptRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,11 +94,11 @@ namespace BLL
 
         }
 
-        public virtual List<Produto_Ibpt> getProduto_Ibpt(Expression<Func<Produto_Ibpt, bool>> predicate, Expression<Func<Produto_Ibpt, string>>[] ordem, bool desc)
+        public virtual List<Produto_Ibpt> getProduto_Ibpt(Expression<Func<Produto_Ibpt, bool>> predicate, bool desc, params Expression<Func<Produto_Ibpt, string>>[] ordem)
         {
             try
             {         
-                return _Produto_IbptRepositorio.Get(predicate, ordem, desc).ToList();
+                return _Produto_IbptRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {

@@ -79,12 +79,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, Expression<Func<Cidade, string>>[] ordem, bool desc, int page, int pageSize, out int totalRecords)
+        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Cidade, string>>[] ordem)
         {
             try
             {
                 totalRecords = _CidadeRepositorio.getTotalRegistros(predicate);
-                return _CidadeRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+                return _CidadeRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -94,12 +94,12 @@ namespace BLL
 
         }
 
-        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, Expression<Func<Cidade, string>>[] ordem, bool desc)
+        public virtual List<Cidade> getCidade(Expression<Func<Cidade, bool>> predicate, bool desc, params Expression<Func<Cidade, string>>[] ordem)
         {
             try
             {
          
-                return _CidadeRepositorio.Get(predicate, ordem, desc).ToList();
+                return _CidadeRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
             {
