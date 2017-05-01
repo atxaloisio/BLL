@@ -28,7 +28,7 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente> getCliente(int Id = -1)
+        public virtual List<Cliente> getCliente(long? Id = -1, bool NoTracking = false)
         {
             try
             {
@@ -38,7 +38,15 @@ namespace BLL
                 }
                 else
                 {
-                    return _ClienteRepositorio.Get(p => p.Id == Id).ToList();
+                    if (NoTracking)
+                    {
+                        return _ClienteRepositorio.GetNT(p => p.Id == Id).ToList();
+                    }
+                    else
+                    {
+                        return _ClienteRepositorio.Get(p => p.Id == Id).ToList();
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -109,11 +117,19 @@ namespace BLL
 
         }
 
-        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate)
+        public virtual List<Cliente> getCliente(Expression<Func<Cliente, bool>> predicate, bool NoTracking = false)
         {
             try
             {                
-                return _ClienteRepositorio.Get(predicate).ToList();
+                if (NoTracking)
+                {
+                    return _ClienteRepositorio.GetNT(predicate).ToList();
+                }
+                else
+                {
+                    return _ClienteRepositorio.Get(predicate).ToList();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -141,12 +157,14 @@ namespace BLL
                     email = item.email,
                     endereco = item.endereco,
                     endereco_numero = item.endereco_numero,
-                    estado = item.estado,
-                    logradouro = item.logradouro,
+                    estado = item.estado,                    
                     nome_fantasia = item.nome_fantasia,
                     razao_social = item.razao_social,
                     telefone1_ddd = item.telefone1_ddd,
-                    telefone1_numero = item.telefone1_numero
+                    telefone1_numero = item.telefone1_numero,
+                    contato = item.contato,
+                    inscricao_estadual = item.inscricao_estadual,
+                    inscricao_municipal = item.inscricao_municipal
                 });
             }
 
