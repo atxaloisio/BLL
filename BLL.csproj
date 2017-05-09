@@ -53,6 +53,7 @@
     <Compile Include="Cliente_VendedorBLL.cs" />
     <Compile Include="CNAEBLL.cs" />
     <Compile Include="Conta_CorrenteBLL.cs" />
+    <Compile Include="EmpresaBLL.cs" />
     <Compile Include="Familia_ProdutoBLL.cs" />
     <Compile Include="FormasPagVendaBLL.cs" />
     <Compile Include="FuncaoBLL.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Pedido_ArmacaoBLL.cs" />
     <Compile Include="Pedido_LenteBLL.cs" />
     <Compile Include="Pedido_OticaBLL.cs" />
+    <Compile Include="Pedido_Otica_InfoAdicBLL.cs" />
+    <Compile Include="Pedido_Otica_ParcelasBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
     <Compile Include="ProdutoBLL.cs" />
     <Compile Include="Produto_IbptBLL.cs" />

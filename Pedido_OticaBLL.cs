@@ -126,6 +126,28 @@ namespace BLL
 
         }
 
+        public virtual List<Pedido_OticaParcelaView> ToList_Pedido_OticaParcelaView(List<Pedido_Otica> lst)
+        {
+            List<Pedido_OticaParcelaView> lstRetorno = new List<Pedido_OticaParcelaView>();
+
+            foreach (Pedido_Otica item in lst)
+            {
+                lstRetorno.Add(new Pedido_OticaParcelaView
+                {                    
+                    id = item.Id,
+                    codigo = item.codigo,
+                    cliente = item.cliente.nome_fantasia,
+                    codicao_pagamento = item.parcela.descricao,
+                    DtEmissao = item.data_emissao,
+                    DtFechamento = item.data_fechamento,
+                    Status = Enumerados.GetStringValue((StatusPedido)item.status)
+                });
+            }
+
+            return lstRetorno;
+
+        }
+
         public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, string>> ordem, bool desc, int page, int pageSize, out int totalRecords)
         {
             try
@@ -380,7 +402,7 @@ namespace BLL
                         itemPedido_OticaTela.Add(clone);
                     }
                 }
-
+                
                 Pedido_Otica.alteracao = DateTime.Now;
                 Pedido_Otica.usuario_alteracao = UsuarioLogado.nome;
                 _Pedido_OticaRepositorio.Atualizar(Pedido_Otica);
@@ -551,6 +573,8 @@ namespace BLL
             }
 
         }
+
+        
 
         public void Dispose()
         {
