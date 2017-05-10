@@ -28,7 +28,7 @@ namespace BLL
 
         }
 
-        public virtual List<Produto> getProduto(int Id = -1)
+        public virtual List<Produto> getProduto(long Id = -1 , bool NoTracking = false)
         {
             try
             {
@@ -38,7 +38,15 @@ namespace BLL
                 }
                 else
                 {
-                    return _ProdutoRepositorio.Get(p => p.id == Id).ToList();
+                    if (NoTracking)
+                    {
+                        return _ProdutoRepositorio.GetNT(p => p.id == Id).ToList();
+                    }
+                    else
+                    {
+                        return _ProdutoRepositorio.Get(p => p.id == Id).ToList();
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -108,17 +116,47 @@ namespace BLL
 
         }
 
-        public virtual List<Produto> getProduto(Expression<Func<Produto, bool>> predicate)
+        public virtual List<Produto> getProduto(Expression<Func<Produto, bool>> predicate, bool NoTracking = false)
         {
             try
             {
-                return _ProdutoRepositorio.Get(predicate).ToList();
+                if (NoTracking)
+                {
+                    return _ProdutoRepositorio.GetNT(predicate).ToList();
+                }
+                else
+                {
+                    return _ProdutoRepositorio.Get(predicate).ToList();
+                }
+                    
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
+
+        }
+
+        public virtual List<ProdutoView> ToList_ProdutoView(List<Produto> lst)
+        {
+            List<ProdutoView> lstRetorno = new List<ProdutoView>();
+
+            foreach (Produto item in lst)
+            {
+                lstRetorno.Add(new ProdutoView
+                {
+                    Id = item.id,
+                    codigo =  item.codigo,
+                    descricao = item.descricao,
+                    familia = item.descricao_familia,
+                    ncm = item.ncm,
+                    unidade = item.unidade,
+                    valor_unitario = item.valor_unitario
+                });
+            }
+
+            return lstRetorno;
 
         }
 
