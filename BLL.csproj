@@ -76,6 +76,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotaBLL.cs" />
     <Compile Include="TagBLL.cs" />
+    <Compile Include="Tipo_ArmacaoBLL.cs" />
+    <Compile Include="Tipo_LenteBLL.cs" />
     <Compile Include="UnidadeBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
     <Compile Include="VendedorBLL.cs" />
