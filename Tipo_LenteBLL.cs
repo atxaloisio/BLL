@@ -123,6 +123,24 @@ namespace BLL
 
         }
 
+        public virtual List<Tipo_LenteView> ToList_Tipo_LenteView(List<Tipo_Lente> lst)
+        {
+            List<Tipo_LenteView> lstRetorno = new List<Tipo_LenteView>();
+
+            foreach (Tipo_Lente item in lst)
+            {
+                lstRetorno.Add(new Tipo_LenteView
+                {
+                    Id = item.Id,
+                    descricao = item.descricao,
+                    inativo = item.inativo == "S"
+                });
+            }
+
+            return lstRetorno;
+
+        }
+
         public virtual void AdicionarTipo_Lente(Tipo_Lente Tipo_Lente)
         {
             try

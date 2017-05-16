@@ -67,9 +67,16 @@ namespace BLL
                     pedido.numero_caixa = item.caixa.numero;
                 }
                 
-                pedido.cliente = item.cliente.nome_fantasia;
-                pedido.codicao_pagamento = item.parcela.descricao;
-
+                if (item.cliente != null)
+                {
+                    pedido.cliente = item.cliente.nome_fantasia;
+                }
+                
+                if (item.parcela != null)
+                {
+                    pedido.codicao_pagamento = item.parcela.descricao;
+                }
+                
                 if (item.vendedor != null)
                 {
                     pedido.vendedor = item.vendedor.nome;
@@ -80,13 +87,25 @@ namespace BLL
                     pedido.transportadora = item.transportadora.nome_fantasia;
                 }
                 
-                pedido.DtEmissao = item.data_emissao;
-                pedido.DtFechamento = item.data_fechamento;
-                pedido.Status = Enumerados.GetStringValue((StatusPedido)item.status);
-                if (!string.IsNullOrEmpty(item.usuario_alteracao))
+                if (item.data_emissao != null)
                 {
-                    pedido.usuario = item.usuario_alteracao;
+                    pedido.DtEmissao = item.data_emissao;
                 }
+                
+                if (item.data_fechamento != null)
+                {
+                    pedido.DtFechamento = item.data_fechamento;
+                }
+                
+                if (item.status != null)
+                {
+                    pedido.Status = Enumerados.GetStringValue((StatusPedido)item.status);
+                    if (!string.IsNullOrEmpty(item.usuario_alteracao))
+                    {
+                        pedido.usuario = item.usuario_alteracao;
+                    }
+                }
+                
                 else if (!string.IsNullOrEmpty(item.usuario_inclusao))
                 {
                     pedido.usuario = item.usuario_inclusao;

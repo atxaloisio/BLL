@@ -123,6 +123,24 @@ namespace BLL
 
         }
 
+        public virtual List<Tipo_ArmacaoView> ToList_Tipo_ArmacaoView(List<Tipo_Armacao> lst)
+        {
+            List<Tipo_ArmacaoView> lstRetorno = new List<Tipo_ArmacaoView>();
+
+            foreach (Tipo_Armacao item in lst)
+            {
+                lstRetorno.Add(new Tipo_ArmacaoView
+                {
+                    Id = item.Id,
+                    descricao = item.descricao,
+                    inativo = item.inativo == "S"
+                });
+            }
+
+            return lstRetorno;
+
+        }
+
         public virtual void AdicionarTipo_Armacao(Tipo_Armacao Tipo_Armacao)
         {
             try
