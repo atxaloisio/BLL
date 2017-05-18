@@ -478,23 +478,23 @@ namespace BLL
             {
                 TextoArq[Index] = string.Empty;
             }
+            
+            IntGenLab = Convert.ToBoolean(Parametro.GetParametro("intGenLab"));
 
-
-
-            if (ConfigurationManager.AppSettings["bGeraGenLab"] != null)
-            {
-                string value = ConfigurationManager.AppSettings["bGeraGenLab"];
-                IntGenLab = Convert.ToBoolean(value);
-            }
 
             if (IntGenLab)
             {
-                if (ConfigurationManager.AppSettings["strPathFileGenLab"] != null)
+                CaminhoArquivos = Parametro.GetParametro("strPathFileLab");
+                
+                if (pedido.caixa != null)
                 {
-                    CaminhoArquivos = ConfigurationManager.AppSettings["strPathFileGenLab"];
+                    TextoArq[CAIXA] = pedido.caixa.numero;
                 }
-
-                TextoArq[CAIXA] = pedido.numero_caixa;
+                else
+                {
+                    TextoArq[CAIXA] = "0";
+                }
+                  
                 //1 ambos , 2 Direito, 3 esquerdo
 
                 if ((!string.IsNullOrEmpty(pedido.od_gl_esf) && (!string.IsNullOrEmpty(pedido.oe_gl_esf))))
@@ -515,7 +515,7 @@ namespace BLL
 
                 if (pedido.cliente != null)
                 {
-                    TextoArq[CLIENTE] = "\"" + pedido.cliente.nome_fantasia + ";" + pedido.cliente.codigo_cliente_integracao + ";" + pedido.numero_pedido_cliente + "\"";
+                    TextoArq[CLIENTE] = "\"" + pedido.cliente.nome_fantasia + ";" + pedido.cliente.codigo_cliente_integracao.PadLeft(pedido.cliente.codigo_cliente_integracao.Length +1,'0') + ";" + pedido.numero_pedido_cliente + "\"";
                 }
 
 
