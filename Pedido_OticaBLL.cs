@@ -515,7 +515,17 @@ namespace BLL
 
                 if (pedido.cliente != null)
                 {
-                    TextoArq[CLIENTE] = "\"" + pedido.cliente.nome_fantasia + ";" + pedido.cliente.codigo_cliente_integracao.PadLeft(pedido.cliente.codigo_cliente_integracao.Length +1,'0') + ";" + pedido.numero_pedido_cliente + "\"";
+                    string codCliente = string.Empty;
+                    if (pedido.cliente.codigo_cliente_integracao.Length <=3)
+                    {
+                        codCliente = pedido.cliente.codigo_cliente_integracao.PadLeft(pedido.cliente.codigo_cliente_integracao.Length + 1, '0');
+                    }
+                    else
+                    {
+                        codCliente = pedido.cliente.codigo_cliente_integracao;
+                    }
+
+                    TextoArq[CLIENTE] = "\"" + pedido.cliente.nome_fantasia + ";" + codCliente + ";" + pedido.numero_pedido_cliente + "\"";
                 }
 
 

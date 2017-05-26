@@ -110,17 +110,49 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica_Parcelas> getPedido_Otica_Parcelas(Expression<Func<Pedido_Otica_Parcelas, bool>> predicate)
+        public virtual List<Pedido_Otica_Parcelas> getPedido_Otica_Parcelas(Expression<Func<Pedido_Otica_Parcelas, bool>> predicate, bool NoTracking = false)
         {
             try
             {
-                return _Pedido_Otica_ParcelasRepositorio.Get(predicate).ToList();
+                if (NoTracking)
+                {
+                    return _Pedido_Otica_ParcelasRepositorio.GetNT(predicate).ToList();
+                }
+                else
+                {
+                    return _Pedido_Otica_ParcelasRepositorio.Get(predicate).ToList();
+                }
+                
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
+
+        }
+
+        public virtual List<ParcelaView> ToList_Pedido_OticaParcelaView(ICollection<Pedido_Otica_Parcelas> lst)
+        {
+            List<ParcelaView> lstRetorno = new List<ParcelaView>();
+
+            foreach (Pedido_Otica_Parcelas item in lst)
+            {
+                lstRetorno.Add(new ParcelaView
+                {
+                    Id = item.Id,
+                    DtPagamento = item.data_pagamento,
+                    DtVencimento = item.data_vencimento,
+                    Id_Pedido_Otica = item.Id_pedido_otica,
+                    NrParcela = item.numero_parcela,
+                    Pago = item.pago == "S",
+                    Percentual = item.percentual,
+                    Valor = item.valor,
+                    NrDias = item.quantidade_dias                    
+                });
+            }
+             
+            return lstRetorno;
 
         }
 
