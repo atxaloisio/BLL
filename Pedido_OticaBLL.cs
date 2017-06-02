@@ -61,22 +61,89 @@ namespace BLL
                 Pedido_OticaView pedido = new Pedido_OticaView();
                 pedido.id = item.Id;
                 pedido.codigo = item.codigo;
+
+                if (item.pedido_otica_infoadic.Count() > 0)
+                {
+                    pedido.os = item.pedido_otica_infoadic.FirstOrDefault().ordem_servico;
+                    pedido.laboratorio = item.pedido_otica_infoadic.FirstOrDefault().laboratorio;
+                }
+
+                if (item.cliente != null)
+                {
+                    pedido.cliente = item.cliente.nome_fantasia;
+                }
+
+                if (item.parcela != null)
+                {
+                    pedido.codicao_pagamento = item.parcela.descricao;
+                }
+
+                if (item.vendedor != null)
+                {
+                    pedido.vendedor = item.vendedor.nome;
+                }
+
+                if (item.data_emissao != null)
+                {
+                    pedido.DtEmissao = item.data_emissao;
+                }
+
+                if (item.itempedido_otica.Count() > 0)
+                {
+                    decimal Total = 0;
+                    Total = item.itempedido_otica.Sum(p => p.valor_total);
+                    pedido.Total = Total;
+                }
+
+                if (item.status != null)
+                {
+                    pedido.Status = Enumerados.GetStringValue((StatusPedido)item.status);
+                    if (!string.IsNullOrEmpty(item.usuario_alteracao))
+                    {
+                        pedido.usuario = item.usuario_alteracao;
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(item.usuario_inclusao))
+                {
+                    pedido.usuario = item.usuario_inclusao;
+                }
+
+                pedido.Cancelado = item.cancelado == "S";
+
+                lstRetorno.Add(pedido);
+
+            }
+
+            return lstRetorno;
+
+        }
+
+        public virtual List<Pedido_LaboratorioView> ToList_Pedido_LaboratorioView(List<Pedido_Otica> lst)
+        {
+            List<Pedido_LaboratorioView> lstRetorno = new List<Pedido_LaboratorioView>();
+
+            foreach (Pedido_Otica item in lst)
+            {
+                Pedido_LaboratorioView pedido = new Pedido_LaboratorioView();
+                pedido.id = item.Id;
+                pedido.codigo = item.codigo;
                 pedido.numero_pedido_cliente = item.numero_pedido_cliente;
                 if (item.caixa != null)
                 {
                     pedido.numero_caixa = item.caixa.numero;
                 }
-                
+
                 if (item.cliente != null)
                 {
                     pedido.cliente = item.cliente.nome_fantasia;
                 }
-                
+
                 if (item.parcela != null)
                 {
                     pedido.codicao_pagamento = item.parcela.descricao;
                 }
-                
+
                 if (item.vendedor != null)
                 {
                     pedido.vendedor = item.vendedor.nome;
@@ -86,17 +153,17 @@ namespace BLL
                 {
                     pedido.transportadora = item.transportadora.nome_fantasia;
                 }
-                
+
                 if (item.data_emissao != null)
                 {
                     pedido.DtEmissao = item.data_emissao;
                 }
-                
+
                 if (item.data_fechamento != null)
                 {
                     pedido.DtFechamento = item.data_fechamento;
                 }
-                
+
                 if (item.status != null)
                 {
                     pedido.Status = Enumerados.GetStringValue((StatusPedido)item.status);
@@ -105,11 +172,13 @@ namespace BLL
                         pedido.usuario = item.usuario_alteracao;
                     }
                 }
-                
+
                 else if (!string.IsNullOrEmpty(item.usuario_inclusao))
                 {
                     pedido.usuario = item.usuario_inclusao;
                 }
+
+                pedido.Cancelado = item.cancelado == "S";
 
 
                 lstRetorno.Add(pedido);
@@ -152,7 +221,7 @@ namespace BLL
             foreach (Pedido_Otica item in lst)
             {
                 lstRetorno.Add(new Pedido_OticaParcelaView
-                {                    
+                {
                     id = item.Id,
                     codigo = item.codigo,
                     cliente = item.cliente.nome_fantasia,
@@ -197,7 +266,7 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords,params Expression<Func<Pedido_Otica, string>>[] ordem)
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Pedido_Otica, string>>[] ordem)
         {
             try
             {
@@ -212,11 +281,11 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc,params Expression<Func<Pedido_Otica, string>>[] ordem)
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc, params Expression<Func<Pedido_Otica, string>>[] ordem)
         {
             try
             {
-        
+
                 return _Pedido_OticaRepositorio.Get(predicate, desc, ordem).ToList();
             }
             catch (Exception ex)
@@ -227,11 +296,19 @@ namespace BLL
 
         }
 
-        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate)
+        public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool NoTracking = false)
         {
             try
             {
-                return _Pedido_OticaRepositorio.Get(predicate).ToList();
+                if (NoTracking)
+                {
+                    return _Pedido_OticaRepositorio.GetNT(predicate).ToList();
+                }
+                else
+                {
+                    return _Pedido_OticaRepositorio.Get(predicate).ToList();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -271,6 +348,19 @@ namespace BLL
         {
             try
             {
+                #region Parcela Pedido
+
+                decimal? totalValor = 0;
+                totalValor = Pedido_Otica.itempedido_otica.Sum(p => p.valor_total);
+
+                Pedido_Otica_ParcelasBLL popBLL = new Pedido_Otica_ParcelasBLL();
+
+                Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
+
+
+                #endregion
+
+
                 Pedido_Otica.inclusao = DateTime.Now;
                 Pedido_Otica.usuario_inclusao = UsuarioLogado.nome;
                 Pedido_Otica.codigo = Utils.Sequence.GetNextVal("sq_pedido_otica_sequence");
@@ -375,6 +465,7 @@ namespace BLL
 
         public virtual void AlterarPedido_Otica(Pedido_Otica Pedido_Otica)
         {
+            #region ItemPedido
             try
             {
                 ItemPedido_OticaBLL itemPedido_OticaBLL = new ItemPedido_OticaBLL();
@@ -421,7 +512,39 @@ namespace BLL
                         itemPedido_OticaTela.Add(clone);
                     }
                 }
-                
+                #endregion
+
+                #region Parcela Pedido
+
+                decimal? totalValor = 0;
+                totalValor = Pedido_Otica.itempedido_otica.Sum(p => p.valor_total);
+
+                Pedido_Otica_ParcelasBLL popBLL = new Pedido_Otica_ParcelasBLL();
+
+                bool RemoveParcela = Pedido_Otica.pedido_otica_parcelas.Count() > 0;
+
+                ICollection<Pedido_Otica_Parcelas> parcelasList = new List<Pedido_Otica_Parcelas>();
+                if (RemoveParcela)
+                {
+                    parcelasList = Pedido_Otica.pedido_otica_parcelas;
+                }
+
+                Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
+
+                if (!RemoveParcela)
+                {
+                    parcelasList = popBLL.getPedido_Otica_Parcelas(p => p.Id_pedido_otica == Pedido_Otica.Id, true);
+                }
+
+                foreach (Pedido_Otica_Parcelas item in parcelasList)
+                {
+                    Pedido_Otica.pedido_otica_parcelas.Add(item);
+                }
+
+
+
+                #endregion
+
                 Pedido_Otica.alteracao = DateTime.Now;
                 Pedido_Otica.usuario_alteracao = UsuarioLogado.nome;
                 _Pedido_OticaRepositorio.Atualizar(Pedido_Otica);
@@ -478,14 +601,14 @@ namespace BLL
             {
                 TextoArq[Index] = string.Empty;
             }
-            
+
             IntGenLab = Convert.ToBoolean(Parametro.GetParametro("intGenLab"));
 
 
             if (IntGenLab)
             {
                 CaminhoArquivos = Parametro.GetParametro("strPathFileLab");
-                
+
                 if (pedido.caixa != null)
                 {
                     TextoArq[CAIXA] = pedido.caixa.numero;
@@ -494,7 +617,7 @@ namespace BLL
                 {
                     TextoArq[CAIXA] = "0";
                 }
-                  
+
                 //1 ambos , 2 Direito, 3 esquerdo
 
                 if ((!string.IsNullOrEmpty(pedido.od_gl_esf) && (!string.IsNullOrEmpty(pedido.oe_gl_esf))))
@@ -516,7 +639,7 @@ namespace BLL
                 if (pedido.cliente != null)
                 {
                     string codCliente = string.Empty;
-                    if (pedido.cliente.codigo_cliente_integracao.Length <=3)
+                    if (pedido.cliente.codigo_cliente_integracao.Length <= 3)
                     {
                         codCliente = pedido.cliente.codigo_cliente_integracao.PadLeft(pedido.cliente.codigo_cliente_integracao.Length + 1, '0');
                     }
@@ -591,7 +714,7 @@ namespace BLL
             {
                 Pedido_Otica pedido_Otica = Localizar(id);
                 if (pedido_Otica != null)
-                {
+                {                    
                     pedido_Otica.status = (int)status;
                     AlterarPedido_Otica(pedido_Otica);
                 }
@@ -603,7 +726,7 @@ namespace BLL
 
         }
 
-        
+
 
         public void Dispose()
         {
