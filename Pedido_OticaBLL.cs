@@ -355,9 +355,10 @@ namespace BLL
 
                 Pedido_Otica_ParcelasBLL popBLL = new Pedido_Otica_ParcelasBLL();
 
-                Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
-
-
+                if (totalValor > 0)
+                {
+                    Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
+                }                
                 #endregion
 
 
@@ -515,33 +516,60 @@ namespace BLL
                 #endregion
 
                 #region Parcela Pedido
+                List<Pedido_Otica> poList = getPedido_Otica(p => p.Id == Pedido_Otica.Id, true);
+
+                Pedido_Otica pedBanco = null;
+
+                if (poList.Count() > 0)
+                {
+                    pedBanco = poList.First();
+                }
 
                 decimal? totalValor = 0;
-                totalValor = Pedido_Otica.itempedido_otica.Sum(p => p.valor_total);
+                totalValor = Pedido_Otica.itempedido_otica.Where(c=>c.state != EstadoEntidade.Deleted).Sum(p => p.valor_total);
 
                 Pedido_Otica_ParcelasBLL popBLL = new Pedido_Otica_ParcelasBLL();
 
-                bool RemoveParcela = Pedido_Otica.pedido_otica_parcelas.Count() > 0;
+                bool RemoveParcela = false;
 
+                if (pedBanco != null)
+                {
+                    RemoveParcela = pedBanco.condicao_pagamento != Pedido_Otica.condicao_pagamento;
+                    decimal totalBanco = 0;
+                    totalBanco = pedBanco.itempedido_otica.Sum(p => p.valor_total);
+                    if (totalValor != totalBanco)
+                    {
+                        RemoveParcela = true;
+                    }
+
+                }
+                    
                 ICollection<Pedido_Otica_Parcelas> parcelasList = new List<Pedido_Otica_Parcelas>();
                 if (RemoveParcela)
                 {
                     parcelasList = Pedido_Otica.pedido_otica_parcelas;
-                }
 
-                Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
+                    if (parcelasList.Count == 0)
+                    {
+                        parcelasList = popBLL.getPedido_Otica_Parcelas(p => p.Id_pedido_otica == Pedido_Otica.Id, true);
+                    }
 
-                if (!RemoveParcela)
-                {
-                    parcelasList = popBLL.getPedido_Otica_Parcelas(p => p.Id_pedido_otica == Pedido_Otica.Id, true);
+                    if (totalValor > 0)
+                    {
+                        Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
+                    }
+                    
                 }
+                //else if (!RemoveParcela)
+                //{
+                //    parcelasList = popBLL.getPedido_Otica_Parcelas(p => p.Id_pedido_otica == Pedido_Otica.Id, true);
+                //}
 
                 foreach (Pedido_Otica_Parcelas item in parcelasList)
                 {
+                    item.state = EstadoEntidade.Deleted;
                     Pedido_Otica.pedido_otica_parcelas.Add(item);
                 }
-
-
 
                 #endregion
 
