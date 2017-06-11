@@ -148,6 +148,8 @@ namespace BLL
                     Pago = item.pago == "S",
                     Percentual = item.percentual,
                     Valor = item.valor,
+                    FormaPagamento = item.forma_pagamento,
+                    Usuario = item.usuario_pagamento,
                     NrDias = item.quantidade_dias                    
                 });
             }
