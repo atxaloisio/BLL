@@ -177,6 +177,17 @@ namespace BLL
             try
             {
                 Cliente.inclusao = DateTime.Now;
+
+                if (UsuarioLogado.Id_empresa != null)
+                {
+                    Cliente.Id_empresa = UsuarioLogado.Id_empresa;
+                }
+
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    Cliente.Id_filial = UsuarioLogado.Id_filial;
+                }
+                                
                 _ClienteRepositorio.Adicionar(Cliente);
                 _ClienteRepositorio.Commit();
             }

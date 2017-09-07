@@ -12,7 +12,10 @@ namespace BLL
         public Usuario UsuarioLogado { get; set; }
         public BaseBLL()
         {
-
+            if (stUsuario.UsuarioLogado != null)
+            {
+                UsuarioLogado = stUsuario.UsuarioLogado;
+            }            
         }
     }
 }

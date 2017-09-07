@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Model;
 using DAL;
 using Utils;
+using LinqKit;
 
 
 namespace BLL
@@ -241,7 +242,17 @@ namespace BLL
             try
             {
                 totalRecords = _Pedido_OticaRepositorio.getTotalRegistros();
-                return _Pedido_OticaRepositorio.GetTodos(ordem, desc, page, pageSize).ToList();
+                List<Pedido_Otica> PedidoOticaList;
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    PedidoOticaList = _Pedido_OticaRepositorio.GetTodos(p => p.Id_filial == UsuarioLogado.Id_filial, ordem, desc, page, pageSize).ToList();
+                }
+                else
+                {
+                    PedidoOticaList = _Pedido_OticaRepositorio.GetTodos(ordem, desc, page, pageSize).ToList();
+                }
+
+                return PedidoOticaList;
             }
             catch (Exception ex)
             {
@@ -256,7 +267,13 @@ namespace BLL
             try
             {
                 totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
-                return _Pedido_OticaRepositorio.Get(predicate, ordem, desc, page, pageSize).ToList();
+
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                }
+
+                return _Pedido_OticaRepositorio.Get(predicate.Expand(), ordem, desc, page, pageSize).ToList();
             }
             catch (Exception ex)
             {
@@ -271,7 +288,11 @@ namespace BLL
             try
             {
                 totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
-                return _Pedido_OticaRepositorio.Get(predicate, desc, page, pageSize, ordem).ToList();
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                }
+                return _Pedido_OticaRepositorio.Get(predicate.Expand(), desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -285,8 +306,11 @@ namespace BLL
         {
             try
             {
-
-                return _Pedido_OticaRepositorio.Get(predicate, desc, ordem).ToList();
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                }
+                return _Pedido_OticaRepositorio.Get(predicate.Expand(), desc, ordem).ToList();
             }
             catch (Exception ex)
             {
@@ -300,15 +324,20 @@ namespace BLL
         {
             try
             {
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                }
+
                 if (NoTracking)
                 {
-                    return _Pedido_OticaRepositorio.GetNT(predicate).ToList();
+                    return _Pedido_OticaRepositorio.GetNT(predicate.Expand()).ToList();
                 }
                 else
                 {
-                    return _Pedido_OticaRepositorio.Get(predicate).ToList();
+                    return _Pedido_OticaRepositorio.Get(predicate.Expand()).ToList();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -335,7 +364,11 @@ namespace BLL
         {
             try
             {
-                return _Pedido_OticaRepositorio.getTotalRegistros(predicate);
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                }
+                return _Pedido_OticaRepositorio.getTotalRegistros(predicate.Expand());
             }
             catch (Exception ex)
             {
@@ -358,13 +391,26 @@ namespace BLL
                 if (totalValor > 0)
                 {
                     Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
-                }                
+                }
                 #endregion
 
 
                 Pedido_Otica.inclusao = DateTime.Now;
                 Pedido_Otica.usuario_inclusao = UsuarioLogado.nome;
                 Pedido_Otica.codigo = Utils.Sequence.GetNextVal("sq_pedido_otica_sequence");
+
+                if (UsuarioLogado.Id_empresa != null)
+                {
+                    Pedido_Otica.Id_empresa = UsuarioLogado.Id_empresa;
+                }
+
+
+                if (UsuarioLogado.Id_filial != null)
+                {
+                    Pedido_Otica.Id_filial = UsuarioLogado.Id_filial;
+                }
+
+
                 _Pedido_OticaRepositorio.Adicionar(Pedido_Otica);
                 _Pedido_OticaRepositorio.Commit();
                 GravarArquivo(Pedido_Otica);
@@ -526,7 +572,7 @@ namespace BLL
                 }
 
                 decimal? totalValor = 0;
-                totalValor = Pedido_Otica.itempedido_otica.Where(c=>c.state != EstadoEntidade.Deleted).Sum(p => p.valor_total);
+                totalValor = Pedido_Otica.itempedido_otica.Where(c => c.state != EstadoEntidade.Deleted).Sum(p => p.valor_total);
 
                 Pedido_Otica_ParcelasBLL popBLL = new Pedido_Otica_ParcelasBLL();
 
@@ -543,7 +589,7 @@ namespace BLL
                     }
 
                 }
-                    
+
                 ICollection<Pedido_Otica_Parcelas> parcelasList = new List<Pedido_Otica_Parcelas>();
                 if (RemoveParcela)
                 {
@@ -558,7 +604,7 @@ namespace BLL
                     {
                         Pedido_Otica.pedido_otica_parcelas = popBLL.GerarParcelas(Pedido_Otica.condicao_pagamento, totalValor, DateTime.Now);
                     }
-                    
+
                 }
                 //else if (!RemoveParcela)
                 //{
@@ -742,7 +788,7 @@ namespace BLL
             {
                 Pedido_Otica pedido_Otica = Localizar(id);
                 if (pedido_Otica != null)
-                {                    
+                {
                     pedido_Otica.status = (int)status;
                     AlterarPedido_Otica(pedido_Otica);
                 }
