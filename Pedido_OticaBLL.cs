@@ -265,13 +265,12 @@ namespace BLL
         public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, Expression<Func<Pedido_Otica, string>> ordem, bool desc, int page, int pageSize, out int totalRecords)
         {
             try
-            {
-                totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
-
+            {                
                 if (UsuarioLogado.Id_filial != null)
                 {
-                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                    predicate = predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
                 }
+                totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate.Expand());
 
                 return _Pedido_OticaRepositorio.Get(predicate.Expand(), ordem, desc, page, pageSize).ToList();
             }
@@ -286,12 +285,12 @@ namespace BLL
         public virtual List<Pedido_Otica> getPedido_Otica(Expression<Func<Pedido_Otica, bool>> predicate, bool desc, int page, int pageSize, out int totalRecords, params Expression<Func<Pedido_Otica, string>>[] ordem)
         {
             try
-            {
-                totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate);
+            {                
                 if (UsuarioLogado.Id_filial != null)
                 {
-                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                    predicate = predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
                 }
+                totalRecords = _Pedido_OticaRepositorio.getTotalRegistros(predicate.Expand());
                 return _Pedido_OticaRepositorio.Get(predicate.Expand(), desc, page, pageSize, ordem).ToList();
             }
             catch (Exception ex)
@@ -308,7 +307,7 @@ namespace BLL
             {
                 if (UsuarioLogado.Id_filial != null)
                 {
-                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                    predicate = predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
                 }
                 return _Pedido_OticaRepositorio.Get(predicate.Expand(), desc, ordem).ToList();
             }
@@ -326,7 +325,7 @@ namespace BLL
             {
                 if (UsuarioLogado.Id_filial != null)
                 {
-                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                    predicate = predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
                 }
 
                 if (NoTracking)
@@ -366,7 +365,7 @@ namespace BLL
             {
                 if (UsuarioLogado.Id_filial != null)
                 {
-                    predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
+                    predicate = predicate.And(p => p.Id_filial == UsuarioLogado.Id_filial);
                 }
                 return _Pedido_OticaRepositorio.getTotalRegistros(predicate.Expand());
             }
