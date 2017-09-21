@@ -63,6 +63,7 @@
     <Compile Include="FuncaoBLL.cs" />
     <Compile Include="Funcao_PerfilBLL.cs" />
     <Compile Include="ItemPedido_OticaBLL.cs" />
+    <Compile Include="Item_Livro_CaixaBLL.cs" />
     <Compile Include="Livro_CaixaBLL.cs" />
     <Compile Include="Motivo_EntregaBLL.cs" />
     <Compile Include="MovimentoBLL.cs" />
