@@ -131,37 +131,50 @@ namespace BLL
 
         }
 
-        //public virtual List<Item_Livro_CaixaView> ToList_Item_Livro_CaixaView(List<Item_Livro_Caixa> lst)
-        //{
-        //    List<Item_Livro_CaixaView> lstRetorno = new List<Item_Livro_CaixaView>();
+        public virtual List<Item_Livro_CaixaView> ToList_Item_Livro_CaixaView(List<Item_Livro_Caixa> lst)
+        {
+            List<Item_Livro_CaixaView> lstRetorno = new List<Item_Livro_CaixaView>();
 
-        //    foreach (Item_Livro_Caixa item in lst)
-        //    {
-        //        lstRetorno.Add(new Item_Livro_CaixaView
-        //        {
-        //            Id = item.Id
-        //        });
-        //    }
+            foreach (Item_Livro_Caixa item in lst)
+            {
+                lstRetorno.Add(new Item_Livro_CaixaView
+                {
+                    Id = item.Id,
+                    Id_livro = item.Id_livro,
+                    descricao = item.descricao,
+                    documento = item.documento,
+                    usuario_inclusao = item.usuario_inclusao,
+                    valor = item.valor,
+                    tipo = item.tipo == "E"? "Entrada" : "Saida" 
+                });
 
-        //    return lstRetorno;
+            }
 
-        //}
+            return lstRetorno;
 
-        //public virtual List<Item_Livro_CaixaView> ToList_Item_Livro_CaixaView(ICollection<Item_Livro_Caixa> lst)
-        //{
-        //    List<Item_Livro_CaixaView> lstRetorno = new List<Item_Livro_CaixaView>();
+        }
 
-        //    foreach (Item_Livro_Caixa item in lst)
-        //    {
-        //        lstRetorno.Add(new Item_Livro_CaixaView
-        //        {
-        //            Id = item.Id
-        //        });
-        //    }
+        public virtual List<Item_Livro_CaixaView> ToList_Item_Livro_CaixaView(ICollection<Item_Livro_Caixa> lst)
+        {
+            List<Item_Livro_CaixaView> lstRetorno = new List<Item_Livro_CaixaView>();
 
-        //    return lstRetorno;
+            foreach (Item_Livro_Caixa item in lst)
+            {
+                lstRetorno.Add(new Item_Livro_CaixaView
+                {
+                    Id = item.Id,
+                    Id_livro = item.Id_livro,
+                    descricao = item.descricao,
+                    documento = item.documento,
+                    usuario_inclusao = item.usuario_inclusao,
+                    valor = item.valor,
+                    tipo = item.tipo == "E" ? "Entrada" : "Saida"
+                });
+            }
 
-        //}
+            return lstRetorno;
+
+        }
 
         public virtual void AdicionarItem_Livro_Caixa(Item_Livro_Caixa Item_Livro_Caixa)
         {

@@ -167,6 +167,8 @@ namespace BLL
         {
             try
             {
+                Livro_Caixa.inclusao = DateTime.Now;
+                Livro_Caixa.usuario_inclusao = UsuarioLogado.nome;
                 _Livro_CaixaRepositorio.Adicionar(Livro_Caixa);
                 _Livro_CaixaRepositorio.Commit();
             }
@@ -210,6 +212,8 @@ namespace BLL
         {
             try
             {
+                Livro_Caixa.alteracao = DateTime.Now;
+                Livro_Caixa.usuario_alteracao = UsuarioLogado.nome;
                 _Livro_CaixaRepositorio.Atualizar(Livro_Caixa);
                 _Livro_CaixaRepositorio.Commit();
             }
