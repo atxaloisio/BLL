@@ -241,5 +241,36 @@ namespace BLL
             }
 
         }
+
+        public static void IncluirLancamento(Item_Livro_Caixa pItem_Livro_Caixa, Usuario usuario)
+        {
+            //Obter o lançamento aberto
+            Item_Livro_CaixaBLL ilcBLL = new Item_Livro_CaixaBLL();
+            try
+            {
+                ilcBLL.UsuarioLogado = usuario;
+                ilcBLL.AdicionarItem_Livro_Caixa(pItem_Livro_Caixa);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+
+        public static void ExcluirLancamento(Item_Livro_Caixa pItem_Livro_Caixa, Usuario usuario)
+        {
+            //Obter o lançamento aberto
+            Item_Livro_CaixaBLL ilcBLL = new Item_Livro_CaixaBLL();
+            try
+            {
+                ilcBLL.UsuarioLogado = usuario;
+                ilcBLL.ExcluirItem_Livro_Caixa(pItem_Livro_Caixa);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
