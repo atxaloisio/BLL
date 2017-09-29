@@ -221,16 +221,20 @@ namespace BLL
 
             foreach (Pedido_Otica item in lst)
             {
-                lstRetorno.Add(new Pedido_OticaParcelaView
+                //Evitar erro pela parcela não estar preenchida.
+                if (item.parcela != null)
                 {
-                    id = item.Id,
-                    codigo = item.codigo,
-                    cliente = item.cliente.nome_fantasia,
-                    codicao_pagamento = item.parcela.descricao,
-                    DtEmissao = item.data_emissao,
-                    DtFechamento = item.data_fechamento,
-                    Status = Enumerados.GetStringValue((StatusPedido)item.status)
-                });
+                    lstRetorno.Add(new Pedido_OticaParcelaView
+                    {
+                        id = item.Id,
+                        codigo = item.codigo,
+                        cliente = item.cliente.nome_fantasia,
+                        codicao_pagamento = item.parcela.descricao,
+                        DtEmissao = item.data_emissao,
+                        DtFechamento = item.data_fechamento,
+                        Status = Enumerados.GetStringValue((StatusPedido)item.status)
+                    });
+                }                
             }
 
             return lstRetorno;
